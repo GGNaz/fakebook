@@ -1,6 +1,7 @@
 import Chatroom from "../../Components/HomeComponents/Chatroom";
 import Newsfeed from "../../Components/HomeComponents/Newsfeed";
 import Sidebar from "../../Components/HomeComponents/Sidebar";
+import Trending from "../../Components/HomeComponents/Trending";
 
 function Home() {
     return (
@@ -12,7 +13,11 @@ function Home() {
             <Newsfeed/>
         </div>
         <div className="basis-3/12">
-            <Chatroom/>
+          <div className="flex flex-col">
+            <Trending/>
+            {/* <Chatroom/> */}
+          </div>
+         
         </div>
       </div>
     );
