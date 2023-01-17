@@ -3,6 +3,10 @@ import { Link, Route, Routes } from 'react-router-dom'
 import logoPng from "../../Assets/png/logo.png"
 import { dashboardList } from '../../routes'
 function Sidebar() {
+    const filteredNavRoutes = dashboardList.filter((item) => {
+        return item.roleAccess.indexOf("user") >= 0;
+      });
+    
   return (
     <div className="flex flex-col gap-2 bg-white shadow-lg">
         <div className='p-2'>
