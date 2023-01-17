@@ -2,6 +2,7 @@ import Chatroom from "../../Components/HomeComponents/Chatroom";
 import Newsfeed from "../../Components/HomeComponents/Newsfeed";
 import Sidebar from "../../Components/HomeComponents/Sidebar";
 import Trending from "../../Components/HomeComponents/Trending";
+import ActiveUser from "./ActiveUsersContent/ActiveUser";
 
 function Home() {
     return (
@@ -13,9 +14,9 @@ function Home() {
             <Newsfeed/>
         </div>
         <div className="basis-3/12">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             <Trending/>
-            {/* <Chatroom/> */}
+            <ActiveUser/>
           </div>
          
         </div>

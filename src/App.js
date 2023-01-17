@@ -18,11 +18,6 @@ function App() {
         <Chatroom/>
       </div> 
       }>
-      {/* <div className='flex flex-col h-screen min-h-screen min-w-full p-2 bg-gray-100'>
-        <Navbar/>
-        <Home/>
-        <Chatroom/>
-      </div> */}
       </Route>
       </Routes>
     </div>
