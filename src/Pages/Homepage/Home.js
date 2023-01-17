@@ -18,7 +18,6 @@ function Home() {
             <Trending/>
             <ActiveUser/>
           </div>
-         
         </div>
       </div>
     );
