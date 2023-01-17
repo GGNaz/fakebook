@@ -5,12 +5,12 @@ import Sidebar from '../../Components/DashboardComponents/Sidebar'
 import { getAllComponentsRoutes } from '../../middleware/getAllComponentsRoutes';
 import { dashboardList } from '../../routes';
 
-function Dashboard() {
+function Users() {
   return (
     <div className="flex min-h-screen w-full gap-5 ">
-      asdasd
+      users
     </div>
   )
 }
 
-export default Dashboard
+export default Users

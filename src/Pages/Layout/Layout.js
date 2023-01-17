@@ -1,4 +1,5 @@
 import React from 'react'
+import Sidebar from '../../Components/DashboardComponents/Sidebar'
 import Dashboard from '../Dashboard/Dashboard'
 
 const Layout = () => {
@@ -10,7 +11,7 @@ const Layout = () => {
     },
     {
         role: 'user',
-        component: <Dashboard/>
+        component: <Sidebar/>
     }
   ]  
 
