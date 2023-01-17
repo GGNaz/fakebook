@@ -7,6 +7,9 @@ import { Routes, Route } from "react-router-dom";
 import Login from './Pages/LoginPage/Login';
 import { Player } from "@lottiefiles/react-lottie-player";
 import { useEffect, useState } from 'react';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import { dashboardList } from './routes';
+import { getAllComponentsRoutes } from './middleware/getAllComponentsRoutes';
 
 function App() {
   const [ loading, setLoading ] = useState(true)
@@ -31,6 +34,10 @@ function App() {
           <div>
           <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          {dashboardList.map((item, index) => {
+							return <>{getAllComponentsRoutes(item, index)}</>;
+						})}
           <Route path="/home" element={
             <div className='flex flex-col h-screen min-h-screen min-w-full p-2 bg-gray-100'>
             <Navbar/>
