@@ -53,7 +53,7 @@ function ActiveUser() {
   return (
     <div className="flex flex-col bg-white rounded-xl p-3 gap-5">
       <div className="flex flex-row justify-between">
-        <div className="font-medium text-base ">Contacts 123123</div>
+        <div className="font-medium text-base ">Contacts</div>
         <div className="flex flex-row gap-2">
           <button onClick={() => setShowSearchField(!showSearchField)}>
             <svg
