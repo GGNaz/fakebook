@@ -12,6 +12,17 @@ function Sidebar() {
         <div className='p-2'>
             <img src={logoPng} className="h-12 w-14" alt="logoPng"/>
             <div className='flex flex-col mt-5 '>
+                {
+                    filteredNavRoutes?.map((data, index) => {
+                        return (
+                            <div className='flex justify-center gap-4'>
+                            <Link key={index} to={data?.path}>
+                                 <div>{data.svg}</div>
+                            </Link>
+                            </div>
+                        )
+                    })
+                }
               
 {/*               
                     {

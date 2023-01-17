@@ -1,5 +1,5 @@
 import React from 'react'
-import UserLayout from './UserLayout'
+import Dashboard from '../Dashboard/Dashboard'
 
 const Layout = () => {
     
@@ -10,7 +10,7 @@ const Layout = () => {
     },
     {
         role: 'user',
-        component: <UserLayout/>
+        component: <Dashboard/>
     }
   ]  
 
