@@ -14,17 +14,17 @@ function Sidebar() {
   console.log("filteredNavRoutes", filteredNavRoutes);
 
   return (
-    <div className="flex min-h-screen w-full gap-5 bg-slate-200/50">
+    <div className="flex min-h-screen w-full">
       <div className="basis-1/4">
-        <div className="flex flex-col  h-screen gap-2 bg-customlink shadow-lg">
+        <div className="flex flex-col  h-screen gap-2 shadow-lg">
           <div className="py-5">
-            <div className="flex flex-row gap-3 justify-center">
+            <div className="flex flex-row gap-3 justify-center pb-5 border-b-2 border-neutralblack mx-2">
               <img
                 src={logoPng}
-                className="h-11 w-12 rounded-full"
+                className="h-11 w-12 rounded-md"
                 alt="logoPng"
               />
-              <div className="text-3xl flex items-center font-bold text-white">
+              <div className="text-3xl flex items-center font-bold text-neutralblack">
                 Twitty
               </div>
             </div>
@@ -36,12 +36,12 @@ function Sidebar() {
                   return (
                     <Link
                       to={data.path}
-                      className={`flex flex-row py-2 px-5  rounded-md gap-5 ${
-                        currentRoute ? "bg-white/40 " : ""
+                      className={`flex flex-row p-2 rounded-md gap-5 ${
+                        currentRoute ? "bg-skytheme text-neutralblack" : ""
                       }`}
                     >
-                      <div>{data.svg}</div>
-                      <div className="text-white">{data.title}</div>
+                      <div>{currentRoute ? data.activeSvg : data.svg}</div>
+                      <div className={`${currentRoute ? "text-white" : "text-neutralblack" }`}>{data.title}</div>
                     </Link>
                   );
                 })}
@@ -53,7 +53,7 @@ function Sidebar() {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="text-white w-6 h-6"
+                  className="text-neutralblack w-6 h-6"
                 >
                   <path
                     fill-rule="evenodd"
@@ -62,14 +62,14 @@ function Sidebar() {
                   />
                 </svg>
 
-                <div className="text-white">Settings</div>
+                <div className="text-neutralblack">Settings</div>
               </div>
               <div className="flex flex-row gap-5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="text-white w-6 h-6"
+                  className="text-neutralblack w-6 h-6"
                 >
                   <path
                     fill-rule="evenodd"
@@ -78,18 +78,22 @@ function Sidebar() {
                   />
                 </svg>
 
-                <div className="text-white">Logout</div>
+                <div className="text-neutralblack">Logout</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div className="bg-skytheme/20 h-screen w-full p-5">
       <Routes>
         {dashboardList.map((item, index) => {
           return <>{getAllComponentsRoutes(item, index)}</>;
         })}
         <Route path="*" element={<>404 PAGE</>} />
       </Routes>
+
+      </div>
+    
     </div>
   );
 }

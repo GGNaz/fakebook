@@ -13,7 +13,8 @@ module.exports = {
         neutralblack: "#2B2B2B",
         lightgray: "#62707C",
         darktheme: "#1B2730",
-        customlink: "#1C8ED4"
+        customlink: "#1C8ED4",
+        skytheme: "#81D4EF"
       }
     },
    
