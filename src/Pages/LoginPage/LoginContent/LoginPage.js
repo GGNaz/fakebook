@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useState } from 'react';
 import logoPng from "../../../Assets/png/logo.png";
 // import * as FiIcons from "react-icons/fi";
+import { routesPostApi } from '../../../Api/api';
 
 function LoginPage() {
+  const [formValues, setFormValues] = useState({
+    username: "",
+    password: "",
+  });
+
+  const renderLogin = async (e) => {
+    e.preventDefault();
+    const params = {
+      ...formValues,
+    };
+
+    await routesPostApi("/auth/login", params).then(async (res) => {
+      if (res.status === 200) {
+        if (!res.data.redirect) {
+          localStorage.setItem("token", res.data.token);
+          //getUserInfo();
+        } else {
+          //setShowResetPassword(true);
+          //setStoreUserData(res.data);
+          setFormValues({});
+        }
+      }
+    });
+  };
+
   return (
     <div>
       <div className="flex justify-center mt-10 mb-5">
