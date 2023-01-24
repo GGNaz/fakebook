@@ -1,60 +1,53 @@
 import React, { useState } from "react";
 import logoPng from "../../../Assets/png/logo.png";
 // import * as FiIcons from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import { routesPostApi } from "../../../Api/api";
 import axios from "axios";
 import { toastAlert } from "../../../Api/middleware";
 
 function LoginPage() {
-  // const [formValues, setFormValues] = useState({
-  //   username: "",
-  //   password: "",
-  // });
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [formValues, setFormValues] = useState({
+    username: "",
+    password: "",
+  });
+
+
   const [isLoading, setIsLoading] = useState(false);
+  const [storeUserData, setStoreUserData] = useState({});
 
-  console.log("email",email)
-  console.log("password",password)
+  const renderLogin = async (e) => {
+    e.preventDefault();
+    const params = {
+      ...formValues,
+    };
 
-  // const renderLogin = async (e) => {
-  //   e.preventDefault();
-  //   const params = {
-  //     ...formValues,
-  //   };
+    await routesPostApi("/auth/login", params).then(async (res) => {
+      if (res.status === 200) {
+        if (!res.data.redirect) {
+          localStorage.setItem("token", res.data.token);
+          //getUserInfo();
+         return navigate(`/home`);
+        } else {
+          //setShowResetPassword(true);
+          setStoreUserData(res.data);
+          setFormValues({});
+        }
+      }
+    });
+  };
 
-  //   await routesPostApi("/auth/login", params).then(async (res) => {
-  //     if (res.status === 200) {
-  //       if (!res.data.redirect) {
-  //         localStorage.setItem("token", res.data.token);
-  //         //getUserInfo();
-  //       } else {
-  //         //setShowResetPassword(true);
-  //         //setStoreUserData(res.data);
+  // const getUserInfo = async() => {
+  //   await routesGetApi("/users/info").then((result) => {
+  //     if (result.status === 200) {
   //         setFormValues({});
-  //       }
+  //         return navigate(`/${result.data.userRoles}/${"dashboard"}`);
   //     }
   //   });
-  // };
+  // }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setIsLoading(true);
-    axios
-      .post("/auth/login", { email, password })
-      .then((res) => {
-        toastAlert("info", res)
-        // handle successful login
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }
   return (
     <div>
       <div className="flex justify-center mt-10 mb-5">
@@ -70,7 +63,7 @@ function LoginPage() {
         suscipit, augue et vulputate ornare, massa neque dictum urna, sit amet
         rhoncus massa augue id lectus.
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={renderLogin}>
         <div className="flex mx-20">
           <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
             @
@@ -78,8 +71,10 @@ function LoginPage() {
           <input
             type="email"
             id="website-admin"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={formValues.username}
+            onChange={(e) =>
+              setFormValues({ ...formValues, username: e.target.value })
+            }
             class="rounded-none rounded-r-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="email"
           />
@@ -87,8 +82,10 @@ function LoginPage() {
         <div className="mx-20 my-5">
           <input
             type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
+            value={formValues.passwords}
+            onChange={(e) =>
+              setFormValues({ ...formValues, password: e.target.value })
+            }
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="password"
             required
