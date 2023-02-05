@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import logoPng from "../../../Assets/png/logo.png";
 // import * as FiIcons from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { routesPostApi } from "../../../Api/api";
+import { routesGetApi, routesPostApi } from "../../../Api/api";
 import axios from "axios";
 import { toastAlert } from "../../../Api/middleware";
+import { accountLoginDetailsStore } from "../../../Zustand/AccountInfoStore";
+import shallow from "zustand/shallow";
 
 function LoginPage() {
   const navigate = useNavigate();
-
+  const { storeAccDetails } = accountLoginDetailsStore((state) => state, shallow)
   const [formValues, setFormValues] = useState({
     username: "",
     password: "",
@@ -28,8 +30,8 @@ function LoginPage() {
       if (res.status === 200) {
         if (!res.data.redirect) {
           localStorage.setItem("token", res.data.token);
-          //getUserInfo();
-         return navigate(`/home`);
+          getUserInfo();
+        
         } else {
           //setShowResetPassword(true);
           setStoreUserData(res.data);
@@ -39,14 +41,18 @@ function LoginPage() {
     });
   };
 
-  // const getUserInfo = async() => {
-  //   await routesGetApi("/users/info").then((result) => {
-  //     if (result.status === 200) {
-  //         setFormValues({});
-  //         return navigate(`/${result.data.userRoles}/${"dashboard"}`);
-  //     }
-  //   });
-  // }
+  const getUserInfo = async() => {
+    await routesGetApi("/users/token").then((result) => {
+      console.log("result",result)
+      if (result.status === 200) {
+          setFormValues({});
+          storeAccDetails();
+          return navigate(`/home`);
+          
+          // return navigate(`/${result.data.userRoles}/${"dashboard"}`);
+      }
+    });
+  }
 
   return (
     <div>
@@ -82,7 +88,7 @@ function LoginPage() {
         <div className="mx-20 my-5">
           <input
             type="password"
-            value={formValues.passwords}
+            value={formValues.password}
             onChange={(e) =>
               setFormValues({ ...formValues, password: e.target.value })
             }

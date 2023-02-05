@@ -1,8 +1,26 @@
 import { useState } from "react";
+import { shallow } from "zustand/shallow";
+import { routesPostApi } from "../../../Api/api";
 import user from "../../../Assets/png/user.png";
+import { accountLoginDetailsStore } from "../../../Zustand/AccountInfoStore";
+import { postStore } from "../../../Zustand/PostStore/PostStore";
 
 function UploadForm() {
   const [showTextArea, setShowTextArea] = useState(false);
+  const [formValues, setFormValues] = useState({});
+  const { userInfomation } = accountLoginDetailsStore((state) => state, shallow)
+  const { post } = postStore((state) => state, shallow)
+  console.log("post",post)
+
+  const postStatus = async() => {
+    const params = {
+      image: "https://loremflickr.com/640/480/animals",
+      ...formValues,
+      tags: "63c78eff64de8576404ef8a2"
+    }
+    await routesPostApi("/posts/", params)
+    .then((res) => console.log("res",res))
+  }
   let uploadButtonList = [
     {
       name: "Photo",
@@ -44,6 +62,8 @@ function UploadForm() {
           <textarea
             className="border focus:outline-none p-2 rounded-md w-full"
             rows={5}
+            value={formValues.body}
+            onChange={(e) => setFormValues({...formValues, body: e.target.value})}
             placeholder="What's on your mind, Nazer?"
           />
         ) : (
@@ -89,7 +109,7 @@ function UploadForm() {
               )
             })
           }
-          {showTextArea&&<button className="bg-customlink text-white w-full rounded-full focus:outline-none">Post</button>}
+          {showTextArea&&<button className="bg-customlink text-white w-full rounded-full focus:outline-none" onClick={() => postStatus()}>Post</button>}
         </div>
        
       </div>

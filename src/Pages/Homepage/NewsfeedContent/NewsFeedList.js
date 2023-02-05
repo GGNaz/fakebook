@@ -1,10 +1,18 @@
 import React from 'react'
+import { shallow } from 'zustand/shallow'
+import { postStore } from '../../../Zustand/PostStore/PostStore'
 
 function NewsFeedList() {
+    const { post } = postStore((state) => state, shallow)
+    console.log("post",post)
   return (
-    <div>
-        <div className='flex flex-row bg-white rounded-xl p-3 gap-5'>
-            <img className='w-12 h-12 rounded-full' src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTQyMDA0OTY4OTA2MzAyNTI2/kendall-jenner_gettyimages-477504950jpg.jpg" alt="kendall"/>
+    <div className='flex flex-col gap-4'>
+        {
+            post.map((data)=> {
+                const { tags, body, comments, image, likes,createdAt } = data;
+                return (
+<div className='flex flex-row bg-white rounded-xl p-3 gap-5'>
+            <img className='w-12 h-12 rounded-full' src={image} alt="kendall"/>
             <div className='flex flex-col'>
             <div className='flex flex-row gap-2'>
                 <div className='flex flex-col'>
@@ -22,8 +30,17 @@ function NewsFeedList() {
                 </div>
             </div>
             <div className='flex flex-row gap-1'>
-                <div className='text-xs bg-gray-500/60 text-white px-2 rounded-full'>#kendall</div>
-                <div className='text-xs bg-gray-500/60 text-white px-2 rounded-full'>#model</div>
+                {
+                    tags?.map(({label}) => {
+                        return (
+                            <>
+                             <div className='text-xs bg-gray-500/60 text-white px-2 rounded-full'>#{label}</div>
+                {/* <div className='text-xs bg-gray-500/60 text-white px-2 rounded-full'>#model</div> */}
+                            </>
+                        )
+                    })
+                }
+               
             </div>
             <p className='mt-5 text-sm text-justify'>
             Kendall Nicole Jenner (born November 3, 1995) is an American model, media personality, and socialite. She is a daughter of Kris Jenner and Caitlyn Jenner, and rose to fame in the reality television show Keeping Up with the Kardashians.
@@ -46,6 +63,10 @@ function NewsFeedList() {
             </div>
             </div>
         </div>
+                )
+            } )
+        }
+        
     </div>
   )
 }

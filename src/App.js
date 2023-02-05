@@ -7,15 +7,28 @@ import Login from "./Pages/LoginPage/Login";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { useEffect, useState } from "react";
 import Layout from "./Pages/Layout/Layout";
+import { accountLoginDetailsStore } from "./Zustand/AccountInfoStore";
+import { shallow } from "zustand/shallow";
+import { postStore } from "./Zustand/PostStore/PostStore";
 
 // import Layout from './Pages/Layout/Layout';
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const { userInfomation,storeAccDetails } = accountLoginDetailsStore((state) => state, shallow);
+  const { post, storePost } = postStore((state) => state, shallow);
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
+    storeAccDetails();
+  
+   
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 500);
+  },[])
+  useEffect(() =>{
+  
+      storePost();
+
   },[])
   return (
     <div>
