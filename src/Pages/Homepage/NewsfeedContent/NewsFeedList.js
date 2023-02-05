@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'zustand/shallow'
 import { postStore } from '../../../Zustand/PostStore/PostStore'
 
+
 function NewsFeedList() {
     const { post } = postStore((state) => state, shallow)
     console.log("post",post)

@@ -9,8 +9,7 @@ function UploadForm() {
   const [showTextArea, setShowTextArea] = useState(false);
   const [formValues, setFormValues] = useState({});
   const { userInfomation } = accountLoginDetailsStore((state) => state, shallow)
-  const { post } = postStore((state) => state, shallow)
-  console.log("post",post)
+
 
   const postStatus = async() => {
     const params = {
