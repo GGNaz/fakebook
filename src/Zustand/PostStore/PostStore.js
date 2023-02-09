@@ -10,8 +10,9 @@ const postDetails = {
 
 //set Details object properties
 const storePostDetails = async(set) => {
+	
 	await routesGetApi("/posts").then(({data}) => {
-        console.log("posts",data)
+		console.log("post", data)
 	return set({
 		post: data
 	});
