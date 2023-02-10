@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { shallow } from "zustand/shallow";
 import { postStore } from "../../../Zustand/PostStore/PostStore";
+import "../../../App.css";
 
 function NewsFeedList() {
   const { post } = postStore((state) => state, shallow);
   const [isLoading, setLoading] = useState(true);
-  const [showCommentBox, setShowCommentBox] = useState(false);
   const [showData, setShowData] = useState([]);
 
   const showRestructucre = () => {
     let isStore = [];
 
     post.map((data) => {
-        console.log("ddd", data)
       const params = {
         ...data,
         isShow: false,
@@ -24,11 +23,11 @@ function NewsFeedList() {
   };
   const handleButtonClick = (index, isShow) => {
     let showHiddenData = [...showData];
-    showHiddenData[index].isShow = !isShow
-    return setShowData(showHiddenData)
-  }
-  
+    showHiddenData[index].isShow = !isShow;
+    return setShowData(showHiddenData);
+  };
 
+  console.log("showData", showData);
 
   useEffect(() => {
     showRestructucre();
@@ -43,9 +42,16 @@ function NewsFeedList() {
         <div>Loading...</div>
       ) : (
         showData?.map((data, index) => {
-            console.log(data)
-          const { tags, body, comments, image, likes, createdAt, userData, isShow } =
-            data;
+          const {
+            tags,
+            body,
+            comments,
+            image,
+            likes,
+            createdAt,
+            userData,
+            isShow,
+          } = data;
           return (
             <div className="flex flex-row bg-white rounded-xl p-3 gap-5">
               <img
@@ -141,7 +147,7 @@ function NewsFeedList() {
                     <button
                       className="flex flex-row gap-1 justify-center items-center bg-green-700/60 text-white py-1 px-4 shadow-lg rounded-full"
                       onClick={() => {
-                        handleButtonClick(index, isShow)
+                        handleButtonClick(index, isShow);
                       }}
                     >
                       <svg
@@ -160,15 +166,57 @@ function NewsFeedList() {
                     </button>
                   </div>
                 </div>
+
                 {isShow && (
-                  <form class="w-full bg-white rounded-lg border p-2 mx-auto mt-2">
-                  <div class="px-3 mb-2 mt-2">
-                      <textarea placeholder="Write a comment..." class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"></textarea>
-                  </div>
-                  <div class="flex justify-end px-4">
-                      <input type="submit" class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500" value="Comment" />
-                  </div>
-              </form>
+                  <>
+                    {comments.length ? (
+                      <div className="scrollable-container h-64 overflow-y-scroll fullName">
+                        {comments.map((data, index) => {
+                          console.log("data.createdAt", data);
+                          const date = new Date(data.createdAt);
+                          const now = new Date();
+                          const diffTime = Math.abs(now - date);
+                          const diffDays = Math.ceil(
+                            diffTime / (1000 * 60 * 60 * 24)
+                          );
+                          return (
+                            <div
+                              key={index}
+                              className="bg-slate-50 rounded-lg p-4 my-4"
+                            >
+                              <p className="text-gray-800 font-bold">
+                                {data.user.fullName}
+                              </p>
+                              <p className="text-gray-600">{data.body}</p>
+                              <p className="text-gray-600 text-xs">
+                                5 days ago
+                              </p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div className="text-gray-600 text-center p-4">
+                        {" "}
+                        No comments Yet...
+                      </div>
+                    )}
+                    <form class="w-full  rounded-lg border mt-2">
+                      <div class="">
+                        <textarea
+                          placeholder="Write a comment..."
+                          class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                        ></textarea>
+                      </div>
+                      <div class="flex justify-end px-4">
+                        <input
+                          type="submit"
+                          class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
+                          value="Comment"
+                        />
+                      </div>
+                    </form>
+                  </>
                 )}
               </div>
             </div>
