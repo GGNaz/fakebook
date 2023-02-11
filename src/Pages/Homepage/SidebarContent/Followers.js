@@ -22,8 +22,8 @@ function Followers() {
         },
     ]
     return (
-        <div className="flex flex-col bg-white rounded-xl p-3 gap-5">
-            <div className="font-medium text-base ">
+        <div className="flex flex-col bg-white rounded-xl p-3 gap-5 dark:bg-slate-800">
+            <div className="font-medium text-base dark:text-dirtywhite">
                 Who is following you
             </div>
             <div className="flex flex-col gap-2">
@@ -36,12 +36,12 @@ function Followers() {
                                 <div className="flex flex-row gap-3">
                                     <img src={img} alt={name} className="rounded-full h-12 w-12" />
                                     <div className="flex flex-col">
-                                        <div>{name}</div>
+                                        <div className="dark:text-dirtywhite">{name}</div>
                                         <div className="text-lightgray text-sm">{`@${userid}`}</div>
                                     </div>
                                 </div>
                                 <div className="flex justify-end items-center">
-                                    <button className="bg-customlink text-white px-4 py-1 rounded-full">Follow</button>
+                                    <button className="bg-customlink text-white px-4 py-1 rounded-full dark:bg-white dark:text-darktheme">Follow</button>
                                 </div>
                             </div>
                         )

@@ -2,7 +2,7 @@ import user from "../../../Assets/png/user.png";
 
 function Profile() {
   return (
-    <div className="flex flex-col bg-white rounded-xl">
+    <div className="flex flex-col bg-white dark:bg-slate-800 rounded-xl">
       {/* START TAG COVER PHOTO */}
       <div className="">
         <img
@@ -25,7 +25,7 @@ function Profile() {
 
       {/* START TAG PROFILE DETAILS */}
       <div className="flex flex-col justify-center items-center">
-        <div className="font-medium text-base">Nazer Somera</div>
+        <div className="font-medium text-base dark:text-dirtywhite">Nazer Somera</div>
         <div className="text-lightgray text-sm">{`@nazsmra`}</div>
       </div>
       {/* END TAG PROFILE DETAILS */}
@@ -33,11 +33,11 @@ function Profile() {
       {/* START TAG FOLLOWER AND FOLLOWING DETAILS */}
       <div className="flex flex-row justify-center  mt-5">
         <div className="flex flex-col w-full items-center border-y-2 border-r-2 py-2">
-          <div className="text-sm font-medium">6,287</div>
+          <div className="text-sm font-medium dark:text-dirtywhite">6,287</div>
           <div className="text-sm text-lightgray">Following</div>
         </div>
         <div className="flex flex-col  w-full items-center border-y-2  py-2">
-          <div className="text-sm font-medium">6,287</div>
+          <div className="text-sm font-medium dark:text-dirtywhite">6,287</div>
           <div className="text-sm text-lightgray">Followers</div>
         </div>
       </div>

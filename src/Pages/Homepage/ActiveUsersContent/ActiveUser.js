@@ -51,16 +51,16 @@ function ActiveUser() {
     },
   ];
   return (
-    <div className="flex flex-col bg-white rounded-xl p-3 gap-5">
+    <div className="flex flex-col bg-white rounded-xl p-3 gap-5 dark:bg-slate-800">
       <div className="flex flex-row justify-between">
-        <div className="font-medium text-base ">Contacts</div>
+        <div className="font-medium text-base dark:text-dirtywhite ">Contacts</div>
         <div className="flex flex-row gap-2">
           <button onClick={() => setShowSearchField(!showSearchField)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              class="w-5 h-5"
+              className="w-5 h-5 dark:text-dirtywhite"
             >
               <path
                 fill-rule="evenodd"
@@ -74,7 +74,7 @@ function ActiveUser() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              class="w-5 h-5"
+              className=" dark:text-dirtywhite w-5 h-5"
             >
               <path
                 fill-rule="evenodd"
@@ -96,7 +96,7 @@ function ActiveUser() {
             >
               <div className="flex flex-row gap-2 items-center ">
                 <img className="h-8 w-8 rounded-full" src={image} alt={name} />
-                <div className="text-sm">{name}</div>
+                <div className="text-sm dark:text-dirtywhite">{name}</div>
               </div>
               <div className="flex items-center">
                 <li className="text-green-500 text-lg" />

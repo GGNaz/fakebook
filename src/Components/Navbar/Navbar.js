@@ -1,7 +1,15 @@
+import { useEffect } from "react";
 import user from "../../Assets/png/user.png";
 function Navbar({title, desc}) {
+ 
+  useEffect(() => {
+    console.log("localstorage", localStorage)
+  },[localStorage])
     return (
       <div className="flex flex-row justify-between items-center">
+        <button onClick={() => localStorage.setItem("theme", "light")}>lightmode</button>
+        <button onClick={() => localStorage.setItem("theme", "dark")}>darkmode</button>
+      
       <div className="text-xl text-neutralblack font-medium flex flex-col">
         <div>{title}</div>
         <div className="text-lightgray/70 text-xs">{desc}</div>

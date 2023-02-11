@@ -2,16 +2,58 @@ import React, { useState, useEffect } from "react";
 import { shallow } from "zustand/shallow";
 import { postStore } from "../../../Zustand/PostStore/PostStore";
 import "../../../App.css";
+import { routesGetApi } from "../../../Api/api";
 
 function NewsFeedList() {
   const { post } = postStore((state) => state, shallow);
   const [isLoading, setLoading] = useState(true);
   const [showData, setShowData] = useState([]);
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [windowHeight, setWindowHeight] = useState(0);
+  const [scrollTop, setScrollTop] = useState(0);
+  const [offsetHeight, setOffsetHeight] = useState(0);
+  console.log("windowHeight", windowHeight)
+  console.log("scrollTop", scrollTop)
+  console.log("offsetHeight", offsetHeight)
+  const handleScroll = () => {
+    // setWindowHeight(window.innerHeight);
+    // setScrollTop(document.documentElement.scrollTop);
+    // setOffsetHeight(document.documentElement.offsetHeight);
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+        document.documentElement.offsetHeight ||
+      isLoading
+    ) {
+      return 
+    }else{
+        setPage(page + 1);
+    }
+  
+  };
+  useEffect(() => {
+    console.log(window.innerHeight, document.documentElement.scrollTop,  document.documentElement.offsetHeight)
+   
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll, isLoading, page]);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const response = await routesGetApi(`/posts/?page=${page}`);
+      setData(prevData => [...prevData, ...response.data]);
+      setLoading(false);
+    };
+  
+    fetchData();
+  }, [page]);
 
   const showRestructucre = () => {
     let isStore = [];
 
-    post.map((data) => {
+    data.map((data) => {
       const params = {
         ...data,
         isShow: false,
@@ -31,13 +73,13 @@ function NewsFeedList() {
 
   useEffect(() => {
     showRestructucre();
-  }, [post]);
+  }, [data]);
 
   useEffect(() => {
     setLoading(false);
   }, []);
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 ">
       {isLoading ? (
         <div>Loading...</div>
       ) : (
@@ -53,7 +95,7 @@ function NewsFeedList() {
             isShow,
           } = data;
           return (
-            <div className="flex flex-row bg-white rounded-xl p-3 gap-5">
+            <div className="flex flex-row bg-white dark:bg-slate-800 rounded-xl p-3 gap-5">
               <img
                 className="w-12 h-12 rounded-full"
                 src={image}
@@ -63,7 +105,7 @@ function NewsFeedList() {
                 <div className="flex flex-row gap-2">
                   <div className="flex flex-col">
                     <div className="flex flex-row gap-1">
-                      <div className="font-medium">{userData[0].fullName}</div>
+                      <div className="font-medium text-4xl dark:text-dirtywhite">{index}{userData[0].fullName}</div>
                       <div className="mt-0.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -94,16 +136,16 @@ function NewsFeedList() {
                     );
                   })}
                 </div>
-                <p className="mt-5 text-sm text-justify">{body}</p>
+                <p className="mt-5 text-sm text-justify dark:text-dirtywhite">{body}</p>
                 <div className="flex flex-row w-full gap-12">
-                  <div className=" flex flex-row text-m mt-2 pl-2 gap-2">
+                  <div className=" flex flex-row text-m mt-2 pl-2 gap-2 dark:text-dirtywhite">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="w-6 h-6"
+                      className="w-6 h-6 dark:text-dirtywhite"
                     >
                       <path
                         stroke-linecap="round"
@@ -113,14 +155,14 @@ function NewsFeedList() {
                     </svg>
                     {likes.length}
                   </div>
-                  <div className="flex flex-row text-m mt-2 gap-2">
+                  <div className="flex flex-row text-m mt-2 gap-2 dark:text-dirtywhite">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="w-6 h-6"
+                      className="w-6 h-6 dark:text-dirtywhite"
                     >
                       <path
                         stroke-linecap="round"
@@ -222,6 +264,12 @@ function NewsFeedList() {
             </div>
           );
         })
+    //     <div className="flex flex-col text-6xl">
+    //     {data.map((item, index) => (
+    //   <div key={item._id}>{index}</div>
+    // ))}
+    // {isLoading && <div>Loading...</div>}
+        // </div>
       )}
     </div>
   );

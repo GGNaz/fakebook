@@ -15,8 +15,12 @@ import { postStore } from "./Zustand/PostStore/PostStore";
 
 function App() {
   const [loading, setLoading] = useState(false);
+
   const { userInfomation,storeAccDetails } = accountLoginDetailsStore((state) => state, shallow);
   const { post, storePost } = postStore((state) => state, shallow);
+  const [value, setValue] = useState();
+
+
   useEffect(() => {
     storeAccDetails();
   
@@ -24,6 +28,16 @@ function App() {
     // setTimeout(() => {
     //   setLoading(false);
     // }, 500);
+  
+    console.log("value",localStorage.theme)
+  },[])
+  useEffect(() => {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+    
   },[])
   useEffect(() =>{
   
@@ -50,7 +64,7 @@ function App() {
             <Route
               path="/home"
               element={
-                <div className="flex flex-col h-screen min-h-screen min-w-full p-2 bg-gray-100">
+                <div className="flex flex-col h-screen min-h-screen min-w-full p-2 bg-gray-100 dark:bg-[#06141D]">
                   <Navbar />
                   <Home />
                   <Chatroom />

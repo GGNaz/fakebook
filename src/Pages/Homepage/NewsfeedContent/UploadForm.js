@@ -54,12 +54,12 @@ function UploadForm() {
 
 
   return (
-    <div className="flex flex-row bg-white rounded-xl p-3 gap-5">
+    <div className="flex flex-row bg-white rounded-xl p-3 gap-5 dark:bg-slate-800">
       <img src={user} alt="userImg" className="h-12 w-12 rounded-full" />
       <div className="flex flex-col w-full">
         {showTextArea ? (
           <textarea
-            className="border focus:outline-none p-2 rounded-md w-full"
+            className="border dark:border-none focus:outline-none p-2 rounded-md w-full dark:bg-slate-600"
             rows={5}
             value={formValues.body}
             onChange={(e) => setFormValues({...formValues, body: e.target.value})}
@@ -103,7 +103,7 @@ function UploadForm() {
                   />
                 </svg> */}
     
-                <span className="text-sm">{name}</span>
+                <span className="text-sm dark:text-dirtywhite">{name}</span>
               </button>
               )
             })
