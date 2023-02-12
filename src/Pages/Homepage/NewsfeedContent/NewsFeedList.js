@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { shallow } from "zustand/shallow";
 import { postStore } from "../../../Zustand/PostStore/PostStore";
+import { routesPostApi } from "../../../Api/api";
 import "../../../App.css";
 import { routesGetApi } from "../../../Api/api";
 
@@ -13,9 +14,10 @@ function NewsFeedList() {
   const [windowHeight, setWindowHeight] = useState(0);
   const [scrollTop, setScrollTop] = useState(0);
   const [offsetHeight, setOffsetHeight] = useState(0);
-  console.log("windowHeight", windowHeight)
-  console.log("scrollTop", scrollTop)
-  console.log("offsetHeight", offsetHeight)
+  const [formValues, setFormValues] = useState({});
+  //   console.log("windowHeight", windowHeight)
+  //   console.log("scrollTop", scrollTop)
+  //   console.log("offsetHeight", offsetHeight)
   const handleScroll = () => {
     // setWindowHeight(window.innerHeight);
     // setScrollTop(document.documentElement.scrollTop);
@@ -25,30 +27,41 @@ function NewsFeedList() {
         document.documentElement.offsetHeight ||
       isLoading
     ) {
-      return 
-    }else{
-        setPage(page + 1);
+      return;
+    } else {
+      setPage(page + 1);
     }
-  
   };
   useEffect(() => {
-    console.log(window.innerHeight, document.documentElement.scrollTop,  document.documentElement.offsetHeight)
-   
+    console.log(
+      window.innerHeight,
+      document.documentElement.scrollTop,
+      document.documentElement.offsetHeight
+    );
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll, isLoading, page]);
-  
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       const response = await routesGetApi(`/posts/?page=${page}`);
-      setData(prevData => [...prevData, ...response.data]);
+      setData((prevData) => [...prevData, ...response.data]);
       setLoading(false);
     };
-  
+
     fetchData();
   }, [page]);
+
+  const postComment = async () => {
+    const params = {
+      ...formValues,
+    };
+    await routesPostApi("/body/", params).then((res) =>
+      console.log("res", res)
+    );
+  };
 
   const showRestructucre = () => {
     let isStore = [];
@@ -105,7 +118,10 @@ function NewsFeedList() {
                 <div className="flex flex-row gap-2">
                   <div className="flex flex-col">
                     <div className="flex flex-row gap-1">
-                      <div className="font-medium text-4xl dark:text-dirtywhite">{index}{userData[0].fullName}</div>
+                      <div className="font-medium text-4xl dark:text-dirtywhite">
+                        {index}
+                        {userData[0].fullName}
+                      </div>
                       <div className="mt-0.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +152,9 @@ function NewsFeedList() {
                     );
                   })}
                 </div>
-                <p className="mt-5 text-sm text-justify dark:text-dirtywhite">{body}</p>
+                <p className="mt-5 text-sm text-justify dark:text-dirtywhite">
+                  {body}
+                </p>
                 <div className="flex flex-row w-full gap-12">
                   <div className=" flex flex-row text-m mt-2 pl-2 gap-2 dark:text-dirtywhite">
                     <svg
@@ -248,14 +266,20 @@ function NewsFeedList() {
                         <textarea
                           placeholder="Write a comment..."
                           class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                          value={formValues.body}
+                          onChange={(e) =>
+                            setFormValues({
+                              ...formValues,
+                              body: e.target.value,
+                            })
+                          }
                         ></textarea>
                       </div>
                       <div class="flex justify-end px-4">
-                        <input
-                          type="submit"
-                          class="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
-                          value="Comment"
-                        />
+                        <button className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
+                        onClick={() => postComment()}>
+                          wazzup
+                        </button>
                       </div>
                     </form>
                   </>
@@ -264,11 +288,11 @@ function NewsFeedList() {
             </div>
           );
         })
-    //     <div className="flex flex-col text-6xl">
-    //     {data.map((item, index) => (
-    //   <div key={item._id}>{index}</div>
-    // ))}
-    // {isLoading && <div>Loading...</div>}
+        //     <div className="flex flex-col text-6xl">
+        //     {data.map((item, index) => (
+        //   <div key={item._id}>{index}</div>
+        // ))}
+        // {isLoading && <div>Loading...</div>}
         // </div>
       )}
     </div>
