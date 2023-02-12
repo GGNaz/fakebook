@@ -4,6 +4,7 @@ import { postStore } from "../../../Zustand/PostStore/PostStore";
 import { routesPostApi } from "../../../Api/api";
 import "../../../App.css";
 import { routesGetApi } from "../../../Api/api";
+import moment from "moment"
 
 function NewsFeedList() {
   const { post } = postStore((state) => state, shallow);
@@ -110,16 +111,21 @@ function NewsFeedList() {
           return (
             <div className="flex flex-row bg-white dark:bg-slate-800 rounded-xl p-3 gap-5">
               <img
-                className="w-12 h-12 rounded-full"
+                className="w-12 h-12 rounded-full  hidden md:flex"
                 src={image}
                 alt="kendall"
               />
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-2">
                 <div className="flex flex-row gap-2">
+                <img
+                className="w-12 h-12 rounded-full flex md:hidden"
+                src={image}
+                alt="kendall"
+              />
                   <div className="flex flex-col">
                     <div className="flex flex-row gap-1">
-                      <div className="font-medium text-4xl dark:text-dirtywhite">
-                        {index}
+                      <div className="font-medium  dark:text-dirtywhite">
+               
                         {userData[0].fullName}
                       </div>
                       <div className="mt-0.5">
@@ -137,7 +143,7 @@ function NewsFeedList() {
                         </svg>
                       </div>
                     </div>
-                    <div className="text-lightgray text-xs">{createdAt}</div>
+                    <div className="text-lightgray text-xs">{moment(createdAt).format("LLL")}</div>
                   </div>
                 </div>
                 <div className="flex flex-row gap-1">
@@ -152,7 +158,7 @@ function NewsFeedList() {
                     );
                   })}
                 </div>
-                <p className="mt-5 text-sm text-justify dark:text-dirtywhite">
+                <p className="mt-2 text-sm text-justify dark:text-dirtywhite">
                   {body}
                 </p>
                 <div className="flex flex-row w-full gap-12">

@@ -54,8 +54,8 @@ function UploadForm() {
 
 
   return (
-    <div className="flex flex-row bg-white rounded-xl p-3 gap-5 dark:bg-slate-800">
-      <img src={user} alt="userImg" className="h-12 w-12 rounded-full" />
+    <div className="flex flex-row bg-white rounded-xl p-1 md:p-3 my-2 md:my-0 gap-5 dark:bg-slate-800">
+      <img src={user} alt="userImg" className="h-12 w-12 rounded-full md:flex hidden" />
       <div className="flex flex-col w-full">
         {showTextArea ? (
           <textarea
@@ -73,12 +73,14 @@ function UploadForm() {
             placeholder="What's on your mind, Nazer?"
           />
         )}
-        <div className="flex flex-row gap-2 py-2">
+        <div className="flex flex-col md:flex-row gap-2 py-2 ">
+        <div className="flex flex-row gap-2 w-full justify-evenly md:justify-start">
           {
             uploadButtonList?.map((data) => {
               const { name, path1, path2, iconColor  } = data;
               return (
-                <button className="flex flex-row gap-2 border rounded-full px-4 py-2">
+             
+                <button className="flex flex-row gap-2 border w-full items-center justify-center rounded-full px-2 md:px-4 py-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -105,10 +107,12 @@ function UploadForm() {
     
                 <span className="text-sm dark:text-dirtywhite">{name}</span>
               </button>
+            
               )
             })
           }
-          {showTextArea&&<button className="bg-customlink text-white w-full rounded-full focus:outline-none" onClick={() => postStatus()}>Post</button>}
+            </div>
+          {showTextArea&&<button className="bg-customlink h-10 text-white w-full rounded-full focus:outline-none" onClick={() => postStatus()}>Post</button>}
         </div>
        
       </div>
