@@ -4,7 +4,7 @@ import { postStore } from "../../../Zustand/PostStore/PostStore";
 import { routesPostApi } from "../../../Api/api";
 import "../../../App.css";
 import { routesGetApi } from "../../../Api/api";
-import moment from "moment"
+import moment from "moment";
 
 function NewsFeedList() {
   const { post } = postStore((state) => state, shallow);
@@ -34,11 +34,11 @@ function NewsFeedList() {
     }
   };
   useEffect(() => {
-    console.log(
-      window.innerHeight,
-      document.documentElement.scrollTop,
-      document.documentElement.offsetHeight
-    );
+    // console.log(
+    //   window.innerHeight,
+    //   document.documentElement.scrollTop,
+    //   document.documentElement.offsetHeight
+    // );
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -55,14 +55,33 @@ function NewsFeedList() {
     fetchData();
   }, [page]);
 
-  const postComment = async () => {
+  const postComment = async (id) => {
+    console.log("id", id);
     const params = {
       ...formValues,
+      postId: id,
     };
-    await routesPostApi("/body/", params).then((res) =>
+    await routesPostApi("/comments", params).then((res) =>
       console.log("res", res)
     );
   };
+
+  function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+
+    if (diffDays >= 1) {
+      return `${diffDays} days ago`;
+    } else if (diffHours >= 1) {
+      return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
+    } else {
+      return `less than an hour ago`;
+    }
+  }
 
   const showRestructucre = () => {
     let isStore = [];
@@ -83,8 +102,9 @@ function NewsFeedList() {
     return setShowData(showHiddenData);
   };
 
-  console.log("showData", showData);
-
+  const LikePost = () => {
+    alert("Nilike mo congrats");
+  };
   useEffect(() => {
     showRestructucre();
   }, [data]);
@@ -93,12 +113,13 @@ function NewsFeedList() {
     setLoading(false);
   }, []);
   return (
-    <div className="flex flex-col gap-4 ">
+    <div className="flex flex-col gap-4">
       {isLoading ? (
         <div>Loading...</div>
       ) : (
         showData?.map((data, index) => {
           const {
+            _id,
             tags,
             body,
             comments,
@@ -115,17 +136,16 @@ function NewsFeedList() {
                 src={image}
                 alt="kendall"
               />
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col w-full">
                 <div className="flex flex-row gap-2">
-                <img
-                className="w-12 h-12 rounded-full flex md:hidden"
-                src={image}
-                alt="kendall"
-              />
+                  <img
+                    className="w-12 h-12 rounded-full flex md:hidden"
+                    src={image}
+                    alt="kendall"
+                  />
                   <div className="flex flex-col">
                     <div className="flex flex-row gap-1">
                       <div className="font-medium  dark:text-dirtywhite">
-               
                         {userData[0].fullName}
                       </div>
                       <div className="mt-0.5">
@@ -143,7 +163,9 @@ function NewsFeedList() {
                         </svg>
                       </div>
                     </div>
-                    <div className="text-lightgray text-xs">{moment(createdAt).format("LLL")}</div>
+                    <div className="text-lightgray text-xs">
+                      {moment(createdAt).format("LLL")}
+                    </div>
                   </div>
                 </div>
                 <div className="flex flex-row gap-1">
@@ -207,7 +229,9 @@ function NewsFeedList() {
                     >
                       <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                     </svg>
-                    <span className="text-sm ">Like</span>
+                    <span className="text-sm" onClick={LikePost}>
+                      Likezzzzz
+                    </span>
                   </button>
                   <div>
                     <button
@@ -228,35 +252,43 @@ function NewsFeedList() {
                           clip-rule="evenodd"
                         />
                       </svg>
-                      <span className="text-sm">Comment</span>
+                      <span className="text-sm">Commentzzz</span>
                     </button>
                   </div>
                 </div>
-
                 {isShow && (
                   <>
                     {comments.length ? (
                       <div className="scrollable-container h-64 overflow-y-scroll fullName">
-                        {comments.map((data, index) => {
-                          console.log("data.createdAt", data);
-                          const date = new Date(data.createdAt);
-                          const now = new Date();
-                          const diffTime = Math.abs(now - date);
-                          const diffDays = Math.ceil(
-                            diffTime / (1000 * 60 * 60 * 24)
-                          );
+                        {comments.map((childData, index) => {
+                          const daysSincePost = formatDate(childData.createdAt);
                           return (
-                            <div
-                              key={index}
-                              className="bg-slate-50 rounded-lg p-4 my-4"
-                            >
-                              <p className="text-gray-800 font-bold">
-                                {data.user.fullName}
-                              </p>
-                              <p className="text-gray-600">{data.body}</p>
-                              <p className="text-gray-600 text-xs">
-                                5 days ago
-                              </p>
+                            <div key={index} className="rounded-lg p-4 my-4">
+                              <div className="bg-slate-50 ">
+                                <p className="text-gray-800 font-bold">
+                                  {childData.user.fullName}
+                                </p>
+                                <p className="text-gray-600">
+                                  {childData.body}
+                                </p>
+                              </div>
+                              <div></div>
+
+                              <div className="flex flex-row w-full gap-2">
+                                <button className="">
+                                  <span className="text-sm" onClick={LikePost}>
+                                    Like
+                                  </span>
+                                </button>
+                                <button className="">
+                                  <span className="text-sm" onClick={LikePost}>
+                                    reply
+                                  </span>
+                                </button>
+                                <p className="text-gray-600 py-1 text-xs">
+                                  · {daysSincePost}
+                                </p>
+                              </div>
                             </div>
                           );
                         })}
@@ -270,7 +302,7 @@ function NewsFeedList() {
                     <form class="w-full  rounded-lg border mt-2">
                       <div class="">
                         <textarea
-                          placeholder="Write a comment..."
+                          placeholder="Leave a comment..."
                           class="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
                           value={formValues.body}
                           onChange={(e) =>
@@ -282,9 +314,11 @@ function NewsFeedList() {
                         ></textarea>
                       </div>
                       <div class="flex justify-end px-4">
-                        <button className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
-                        onClick={() => postComment()}>
-                          wazzup
+                        <button
+                          className="px-2.5 py-1.5 rounded-md text-white text-sm bg-indigo-500"
+                          onClick={() => postComment(_id)}
+                        >
+                          comment
                         </button>
                       </div>
                     </form>
