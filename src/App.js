@@ -13,6 +13,7 @@ import { postStore } from "./Zustand/PostStore/PostStore";
 import BottomNav from "./Components/Navbar/BottomNav";
 import NewsFeedList from "./Pages/Homepage/NewsfeedContent/NewsFeedList";
 import UploadForm from "./Pages/Homepage/NewsfeedContent/UploadForm";
+import Register from "./Pages/RegisterPage/Register";
 
 // import Layout from './Pages/Layout/Layout';
 
@@ -54,6 +55,7 @@ function App() {
         <div>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/*" element={<Layout />} />
             <Route
@@ -63,6 +65,7 @@ function App() {
                  <div className=" hidden md:flex md:flex-col">
                   <Navbar />
                   <Home />
+                  
                   <Chatroom />
                   </div>
                   <div className="flex flex-col md:hidden p-2">
