@@ -1,10 +1,14 @@
+import { useState } from "react";
 import NewsFeedList from "../../Pages/Homepage/NewsfeedContent/NewsFeedList";
 import UploadForm from "../../Pages/Homepage/NewsfeedContent/UploadForm";
+import BottomNav from "../Navbar/BottomNav";
 
 function Newsfeed() {
+  const [openForm, setOpenForm] = useState(false)
   return (
-    <div className="flex flex-col gap-2 min-h-screen">
-      <UploadForm />
+    <div className="w-full">
+ <div className="flex flex-col gap-2 min-h-screen  w-full">
+      <UploadForm openForm={openForm} />
       <button className="w-full bg-blue-500/60 flex flex-row justify-center p-1 text-white items-center gap-2">
         <span>4 New Post</span>
         <svg
@@ -22,6 +26,11 @@ function Newsfeed() {
       </button>
       <NewsFeedList />
     </div>
+<div className="flex flex-col md:hidden p-2 w-full">
+        <BottomNav setOpenForm={setOpenForm} />
+      </div>
+    </div>
+   
   );
 }
 

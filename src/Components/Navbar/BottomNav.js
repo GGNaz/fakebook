@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-function BottomNav() {
-  const [openForm, setOpenForm] = useState(false)
+function BottomNav({setOpenForm}) {
 
   return (
     <div className="z-50">
