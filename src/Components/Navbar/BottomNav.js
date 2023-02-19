@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 function BottomNav() {
+  const [openForm, setOpenForm] = useState(false)
+
   return (
+    <div className="z-50">
+
     <div className="fixed bottom-0 w-full">
       <div className="bg-white h-14 shadow-md">
         <div className="flex flex-row w-full justify-evenly h-full items-center gap-5">
@@ -33,7 +37,9 @@ function BottomNav() {
             </svg>
             <div className="text-sm">Trends</div>
           </div>
-          <div className="h-14 w-14 bg-skytheme mb-6 shadow-lg rounded-full flex justify-center items-center ">
+          <div className="h-14 w-14 bg-skytheme mb-6 shadow-lg rounded-full flex justify-center items-center " onClick={() => {
+            setOpenForm(true)
+          }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -80,6 +86,7 @@ function BottomNav() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
