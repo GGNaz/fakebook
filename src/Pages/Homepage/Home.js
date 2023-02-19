@@ -7,7 +7,7 @@ import ActiveUser from "./ActiveUsersContent/ActiveUser";
 function Home() {
     return (
       <div className="flex flex-row gap-2 w-full">
-        <div className="basis-3/12">
+        <div className="basis-3/12 bg-fixed">
             <Sidebar/>
         </div>
         <div className="basis-6/12">
@@ -18,7 +18,6 @@ function Home() {
             <Trending/>
             <ActiveUser/>
           </div>
-         
         </div>
       </div>
     );

@@ -1,8 +1,25 @@
 import { useState } from "react";
+import { shallow } from "zustand/shallow";
+import { routesPostApi } from "../../../Api/api";
 import user from "../../../Assets/png/user.png";
+import { accountLoginDetailsStore } from "../../../Zustand/AccountInfoStore";
+import { postStore } from "../../../Zustand/PostStore/PostStore";
 
 function UploadForm() {
   const [showTextArea, setShowTextArea] = useState(false);
+  const [formValues, setFormValues] = useState({});
+  const { userInfomation } = accountLoginDetailsStore((state) => state, shallow)
+
+
+  const postStatus = async() => {
+    const params = {
+      image: "https://loremflickr.com/640/480/animals",
+      ...formValues,
+      tags: "63c78eff64de8576404ef8a2"
+    }
+    await routesPostApi("/posts/", params)
+    .then((res) => console.log("res",res))
+  }
   let uploadButtonList = [
     {
       name: "Photo",
@@ -37,13 +54,15 @@ function UploadForm() {
 
 
   return (
-    <div className="flex flex-row bg-white rounded-xl p-3 gap-5">
-      <img src={user} alt="userImg" className="h-12 w-12 rounded-full" />
+    <div className="flex flex-row bg-white rounded-xl p-1 md:p-3 my-2 md:my-0 gap-5 dark:bg-slate-800">
+      <img src={user} alt="userImg" className="h-12 w-12 rounded-full md:flex hidden" />
       <div className="flex flex-col w-full">
         {showTextArea ? (
           <textarea
-            className="border focus:outline-none p-2 rounded-md w-full"
+            className="border dark:border-none focus:outline-none p-2 rounded-md w-full dark:bg-slate-600"
             rows={5}
+            value={formValues.body}
+            onChange={(e) => setFormValues({...formValues, body: e.target.value})}
             placeholder="What's on your mind, Nazer?"
           />
         ) : (
@@ -54,12 +73,14 @@ function UploadForm() {
             placeholder="What's on your mind, Nazer?"
           />
         )}
-        <div className="flex flex-row gap-2 py-2">
+        <div className="flex flex-col md:flex-row gap-2 py-2 ">
+        <div className="flex flex-row gap-2 w-full justify-evenly md:justify-start">
           {
             uploadButtonList?.map((data) => {
               const { name, path1, path2, iconColor  } = data;
               return (
-                <button className="flex flex-row gap-2 border rounded-full px-4 py-2">
+             
+                <button className="flex flex-row gap-2 border w-full items-center justify-center rounded-full px-2 md:px-4 py-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -84,12 +105,14 @@ function UploadForm() {
                   />
                 </svg> */}
     
-                <span className="text-sm">{name}</span>
+                <span className="text-sm dark:text-dirtywhite">{name}</span>
               </button>
+            
               )
             })
           }
-          {showTextArea&&<button className="bg-customlink text-white w-full rounded-full focus:outline-none">Post</button>}
+            </div>
+          {showTextArea&&<button className="bg-customlink h-10 text-white w-full rounded-full focus:outline-none" onClick={() => postStatus()}>Post</button>}
         </div>
        
       </div>
