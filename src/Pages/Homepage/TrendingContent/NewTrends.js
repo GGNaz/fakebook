@@ -14,7 +14,7 @@ function NewTrends() {
     }
    ]
     return (
-        <div className="flex flex-col bg-white rounded-xl p-3 gap-5 dark:bg-slate-800">
+        <div className="flex flex-col bg-white rounded-xl p-3 gap-5 dark:bg-slate-800 w-full">
             <div className="flex justify-between">
                 <div className="font-medium text-base dark:text-dirtywhite">
                     Trending

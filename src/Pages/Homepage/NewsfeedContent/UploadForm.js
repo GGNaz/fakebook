@@ -5,11 +5,10 @@ import user from "../../../Assets/png/user.png";
 import { accountLoginDetailsStore } from "../../../Zustand/AccountInfoStore";
 import { postStore } from "../../../Zustand/PostStore/PostStore";
 
-function UploadForm() {
-  const [showTextArea, setShowTextArea] = useState(false);
+function UploadForm({openForm}) {
+  const [showTextArea, setShowTextArea] = useState(openForm);
   const [formValues, setFormValues] = useState({});
   const { userInfomation } = accountLoginDetailsStore((state) => state, shallow)
-
 
   const postStatus = async() => {
     const params = {

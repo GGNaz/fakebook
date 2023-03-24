@@ -5,10 +5,10 @@ import LoginPage from "./LoginContent/LoginPage";
 function Login() {
   return (
     <div class="flex flex-row text-center">
-      <div class="basis-1/2">
+      <div class="hidden md:flex md:basis-1/2">
       <SidePage/>
       </div>
-      <div className="basis-1/2">
+      <div className="flex md:basis-1/2">
         <LoginPage/>
       </div>
     </div>

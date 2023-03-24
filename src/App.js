@@ -54,7 +54,7 @@ function App() {
       ) : ( 
         <div>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/*" element={<Layout />} />
@@ -62,18 +62,19 @@ function App() {
               path="/home"
               element={
                 <div className="flex flex-col w-full h-screen min-h-screen min-w-full md:p-2 bg-gray-100 dark:bg-[#06141D]">
-                 <div className=" hidden md:flex md:flex-col">
+                 <div className="  md:flex md:flex-col">
                   <Navbar />
                   <Home />
-                  
+                  <div className="hidden md:flex md:flex-col">
                   <Chatroom />
                   </div>
-                  <div className="flex flex-col md:hidden p-2">
+                  </div>
+                  {/* <div className="flex flex-col md:hidden p-2">
                   <Navbar />
                     <UploadForm/>
                     <NewsFeedList/>
                       <BottomNav/>
-                  </div>
+                  </div> */}
                 </div>
               }
             ></Route>
