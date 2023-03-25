@@ -14,6 +14,7 @@ import BottomNav from "./Components/Navbar/BottomNav";
 import NewsFeedList from "./Pages/Homepage/NewsfeedContent/NewsFeedList";
 import UploadForm from "./Pages/Homepage/NewsfeedContent/UploadForm";
 import Register from "./Pages/RegisterPage/Register";
+import LandingPage from "./Pages/Landingpage/LandingPage";
 
 // import Layout from './Pages/Layout/Layout';
 
@@ -54,7 +55,8 @@ function App() {
       ) : ( 
         <div>
           <Routes>
-            <Route path="/" element={<Login />} />
+          <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             <Route path="/*" element={<Layout />} />
