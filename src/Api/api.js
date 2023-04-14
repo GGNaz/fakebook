@@ -49,7 +49,7 @@ const apiErrorAlert = (status, message) => {
 
 export const routesPostApi = async (routeName, params) => {
   return api
-    .post("/api/"+routeName, params, headerAuth())
+    .post("/api"+routeName, params, headerAuth())
     .then((res) => {
       return res;
     })
@@ -69,7 +69,7 @@ export const routesPostApi = async (routeName, params) => {
 
 export const routesPutApi = async (routeName, params) => {
   return api
-    .put("/api/"+routeName, params, headerAuth())
+    .put("/api"+routeName, params, headerAuth())
     .then((result) => {
       return {
         data: result.data,
@@ -92,7 +92,7 @@ export const routesPutApi = async (routeName, params) => {
 
 export const routesGetApi = async (routeName) => {
   return api
-    .get("/api/"+routeName, headerAuth())
+    .get("/api"+routeName, headerAuth())
     .then((response) => {
       return response;
     })
@@ -110,7 +110,7 @@ export const routesGetApi = async (routeName) => {
 
 export const routesDeleteApi = async (routeName) => {
   return api
-    .delete("/api/"+routeName, headerAuth())
+    .delete("/api"+routeName, headerAuth())
     .then((response) => {
       return response;
     })
@@ -146,7 +146,7 @@ export const routesGetAllApi = async (routeName) => {
 export const routesGetNoHoc = async (routeName) => {
   return axios.create({
     baseURL: server_url,
-  }).get("/api/"+routeName, headerAuth())
+  }).get("/api"+routeName, headerAuth())
     .then((response) => {
       return response;
     })
