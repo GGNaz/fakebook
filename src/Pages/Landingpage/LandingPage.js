@@ -1,6 +1,8 @@
 import React from "react";
 import dog from "../../Assets/Image/dogv2.png";
+import { useNavigate } from "react-router-dom";
 function LandingPage() {
+  const navigate = useNavigate()
   return (
     <div className="flex flex-col w-full">
       {/* <div className='bg-white w-[31vw] absolute top-0 h-[20vh] z-20 rounded-tr-full'/> */}
@@ -15,7 +17,7 @@ function LandingPage() {
         </div>
         <div className="flex flex-row items-center gap-2">
           {/* <div>About</div> */}
-          <button className="bg-darkgray text-white text-sm px-5 round py-2 flex flex-row gap-1 items-center rounded-full">
+          <button className="bg-darkgray text-white text-sm px-5 round py-2 flex flex-row gap-1 items-center rounded-full" onClick={() => navigate("/login")}>
             <span>Login</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
