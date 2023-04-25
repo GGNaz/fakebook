@@ -10,12 +10,14 @@ import shallow from "zustand/shallow";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { storeAccDetails } = accountLoginDetailsStore((state) => state, shallow)
+  const { storeAccDetails } = accountLoginDetailsStore(
+    (state) => state,
+    shallow
+  );
   const [formValues, setFormValues] = useState({
     username: "",
     password: "",
   });
-
 
   const [isLoading, setIsLoading] = useState(false);
   const [storeUserData, setStoreUserData] = useState({});
@@ -31,7 +33,6 @@ function LoginPage() {
         if (!res.data.redirect) {
           localStorage.setItem("token", res.data.token);
           getUserInfo();
-        
         } else {
           //setShowResetPassword(true);
           setStoreUserData(res.data);
@@ -41,18 +42,18 @@ function LoginPage() {
     });
   };
 
-  const getUserInfo = async() => {
+  const getUserInfo = async () => {
     await routesGetApi("/users/token").then((result) => {
-      console.log("result",result)
+      console.log("result", result);
       if (result.status === 200) {
-          setFormValues({});
-          storeAccDetails();
-          return navigate(`/home`);
-          
-          // return navigate(`/${result.data.userRoles}/${"dashboard"}`);
+        setFormValues({});
+        storeAccDetails();
+        return navigate(`/home`);
+
+        // return navigate(`/${result.data.userRoles}/${"dashboard"}`);
       }
     });
-  }
+  };
 
   return (
     <div>
@@ -127,13 +128,17 @@ function LoginPage() {
             data-mdb-ripple="true"
             data-mdb-ripple-color="light"
           >
-             {isLoading ? 'Loading...' : 'Login'}
+            {isLoading ? "Loading..." : "Login"}
           </button>
         </div>
         <p className="mt-8 text-xs font-light text-center text-gray-700">
           {" "}
           Don't have an account?{" "}
-          <a href="#" className="font-medium text-purple-600 hover:underline">
+          <a
+            href="#"
+            className="font-medium text-purple-600 hover:underline"
+            onClick={() => navigate("/register")}
+          >
             Sign up
           </a>
         </p>
